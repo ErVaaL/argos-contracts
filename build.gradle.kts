@@ -64,7 +64,7 @@ publishing {
     repositories {
         maven {
             name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/erval/argos-contracts")
+            url = uri("https://maven.pkg.github.com/ErVaaL/argos-contracts")
             credentials {
                 username = System.getenv("GITHUB_ACTOR")
                 password = System.getenv("GITHUB_TOKEN")
