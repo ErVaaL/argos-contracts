@@ -1,7 +1,11 @@
 plugins {
     `java-library`
+    `maven-publish`
     id("com.google.protobuf") version "0.9.4"
 }
+
+group = "com.erval.argos"
+version = System.getenv("VERSION") ?: "0.0.1-SNAPSHOT"
 
 repositories {
     mavenCentral()
@@ -39,6 +43,32 @@ sourceSets {
     main {
         proto {
             srcDir("proto")
+        }
+    }
+}
+
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(21))
+        withSourcesJar()
+    }
+}
+
+publishing {
+    publications {
+        create<MavenPublication>("mavenJava") {
+            from(components["java"])
+            artifactId = "argos-contracts"
+        }
+    }
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/erval/argos-contracts")
+            credentials {
+                username = System.getenv("GITHUB_ACTOR")
+                password = System.getenv("GITHUB_TOKEN")
+            }
         }
     }
 }
